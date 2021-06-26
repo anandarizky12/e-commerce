@@ -1,14 +1,33 @@
 import React,{useEffect} from 'react';
-import './style.css';
-import data from  '../../../Data';
+import clsx from 'clsx';
+import { useTheme } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import IconButton from '@material-ui/core/IconButton';
+import MenuIcon from '@material-ui/icons/Menu';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
+import {useStyles} from './MakeStyles';
 
-function SideNav({hide,set}) {
+import data from '../../../Data'
 
-    const [state, setState] = React.useState(false);
+function SideNav({open,setOpen}) {
 
+   
+    
+    
+    const classes = useStyles();
+    const theme = useTheme();
     let category = [];
     
     // useEffect(() => {
@@ -18,41 +37,51 @@ function SideNav({hide,set}) {
         })
 
     // }, []);
+    const handleDrawerOpen = () => {
+        setOpen(true);
+      };
+    
+    const handleDrawerClose = () => {
+        setOpen(false);
+    };
 
     console.log(category);
 
 
-    const toggleDrawer = (open) => (event) => {
-        if (event && event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-          return;
-        }
-    
-        setState(open);
-      };
-
     return (
-        <div 
-        onClick={toggleDrawer(false)}
-        onKeyDown={toggleDrawer(false)}>
-            <List>
-                {category.map((data, index) => (
-                <ListItem button key={data}>
-                    {/* <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon> */}
-                    <ListItemText primary={data} />
-                </ListItem>
-                ))}
-            </List>
-            
-            <Divider />
-            
-            <h4>Select Category</h4>
-            {category.map(data=>(
-                <div className="each-category">
-                    <p>{data}</p>
-                </div>
-            ))}
-
+        <Drawer
+        className={classes.drawer}
+        variant="persistent"
+        anchor="left"
+        open={open}
+        classes={{
+          paper: classes.drawerPaper,
+        }}
+      >
+        <div className={classes.drawerHeader}>
+          <IconButton onClick={handleDrawerClose}>
+            {theme.direction === 'ltr' ? <ChevronLeftIcon /> : <ChevronRightIcon />}
+          </IconButton>
         </div>
+        <Divider />
+        <List>
+          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+            <ListItem button key={text}>
+              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          ))}
+        </List>
+        <Divider />
+        <List>
+            <Typography>Select Category</Typography>
+          {category.map((data, index) => (
+            <ListItem button key={data}>
+              <ListItemText primary={data} />
+            </ListItem>
+          ))}
+        </List>
+      </Drawer>
     )
 }
 
