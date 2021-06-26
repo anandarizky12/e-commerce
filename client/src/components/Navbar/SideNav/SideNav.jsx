@@ -65,7 +65,7 @@ function SideNav({open,setOpen}) {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          {['Inbox', 'Starred', 'Send email', 'Drafts'] .map((text, index) => (
             <ListItem button key={text}>
               <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
               <ListItemText primary={text} />
@@ -77,6 +77,7 @@ function SideNav({open,setOpen}) {
             <Typography>Select Category</Typography>
           {category.map((data, index) => (
             <ListItem button key={data}>
+              <ListItemIcon> <InboxIcon /> </ListItemIcon>
               <ListItemText primary={data} />
             </ListItem>
           ))}

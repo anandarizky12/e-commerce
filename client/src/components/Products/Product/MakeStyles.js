@@ -1,9 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
-import { red } from '@material-ui/core/colors';
+import { red,blue } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
     container:{
       margin:15,
+      marginTop:70,
       maxHeight:360,
       '&:hover': {
           cursor:'pointer'
@@ -35,6 +36,14 @@ const useStyles = makeStyles((theme) => ({
       fontWeight:"bold",
       padding:5,
       fontSize:20
+    },
+    link:{
+      textDecoration:'none',
+    },
+    name:{
+      '&:hover': {
+      color:blue[800]
+    }
     }
   }));
 

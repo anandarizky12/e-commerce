@@ -20,7 +20,7 @@ export default function SearchAppBar() {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             edge="start"
@@ -48,15 +48,8 @@ export default function SearchAppBar() {
             />
           </div>
         </Toolbar>
-
-        {/* <SwipeableDrawer
-            // anchor={anchor}
-            // open={state[anchor]}
-            onClose={toggleDrawer(false)}
-            onOpen={toggleDrawer(true)}
-          > */}
             {<SideNav open={open}  setOpen={setOpen} />}
-          {/* </SwipeableDrawer> */}
+       
       </AppBar>
     </div>
   );

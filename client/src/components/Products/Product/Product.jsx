@@ -1,6 +1,5 @@
 import React from 'react';
-
-import clsx from 'clsx';
+import {Link} from 'react-router-dom'
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -56,9 +55,11 @@ export default function Product({id, name, img, category, price, brand, rating, 
             </Typography>
         </CardContent>
         <CardContent>
-            <Typography variant="body" color="textPrimary" component="h4">
-                {name}
-            </Typography>
+            <Link to={`/details/${id}`} className={classes.link}>
+                <Typography className={classes.name} variant="body" color="textPrimary" component="h4">
+                    {name}
+                </Typography>
+            </Link>
         </CardContent>
             
         </Card>
