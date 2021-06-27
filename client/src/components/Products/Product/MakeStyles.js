@@ -7,12 +7,12 @@ const useStyles = makeStyles((theme) => ({
       marginTop:70,
       maxHeight:360,
       '&:hover': {
-          cursor:'pointer'
+          cursor:'pointer',
+          backgroundColor:red
       }
     },
     root: {
       minWidth:260,
-    
     },
     media: {
       height: 0,
