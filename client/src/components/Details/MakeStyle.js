@@ -74,6 +74,11 @@ const useStyles = makeStyles((theme) => ({
         justifyContent:'space-around',
         marginTop:20,
         flexDirection:'column'
+    },
+    emptyStock:{
+      marginTop:20,
+      textAlign:'center',
+      color:'gray'
     }
   }));
 

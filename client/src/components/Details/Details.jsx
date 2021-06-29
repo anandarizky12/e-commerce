@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
@@ -11,24 +11,26 @@ import FormControl from '@material-ui/core/FormControl';
 import {useSelector , useDispatch} from 'react-redux';
 import { getDetails } from '../../actions';
 import { CircularProgress } from '@material-ui/core';
+import { useHistory } from "react-router-dom";
 
 export default function Details(props) {
-
+  
+  const history = useHistory();
+  const [qty ,setQty] = useState(1)
   
   const dispatch = useDispatch();
   const id =  props.match.params.id;
   useEffect(() => {
-    // data.details.product.map(data=>{
-      //     !category.includes(data.category) && 
-      //     category.push(data.category)
-      // })
       dispatch(getDetails(id));
-      
     }, []);
     
   const details = useSelector(state=>state.productDetails);
-  console.log(details);
+
   const classes = useStyles();
+
+  const handleAddToCart=()=>{
+          history.push(`/cart/${id}?qty=${qty}`)
+  }
 
   return (
    
@@ -57,14 +59,23 @@ export default function Details(props) {
                         <Select
                                 labelId="demo-simple-select-label"
                                 id="demo-simple-select"
+                                onChange={(e)=>setQty(e.target.value)}
+                        >       
+                                {[...Array(details.product.stock).keys()].map(i=>(
+                                        <MenuItem key={i+1} value={i+1}>{i+1}</MenuItem> 
+                                ))}
                              
-                        >
-                                <MenuItem value={10}>10</MenuItem>
-                                <MenuItem value={20}>20</MenuItem>
-                                <MenuItem value={30}>30</MenuItem>
+                               
                         </Select>
                 </FormControl>
-                    <button className={classes.button}>Add to cart</button>
+
+                    {details.product.stock > 0
+                    ?  <button className={classes.button} onClick={()=>handleAddToCart()}>Add to cart</button> 
+                    :     <Typography className={classes.emptyStock}>
+                                Sorry The Product is Empty
+                          </Typography>
+                    }
+                   
             </Grid>
           
         </Grid>
@@ -77,10 +88,3 @@ export default function Details(props) {
   
   );
 }
-// category: 'Shirts',
-// image: 'https://images.unsplash.com/photo-1556905055-8f358a7a47b2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8Y2xvdGhlc3xlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&w=1000&q=80',
-// price: 120,
-// brand: 'Nike',
-// rating: 4.5,
-// numReviews: 10,
-// description: 'high quality details.product',
