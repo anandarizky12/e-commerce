@@ -6,14 +6,16 @@ import  SearchAppBar from './components/Navbar/Navbar';
 import Details from './components/Details/Details';
 
 import {useSelector, useDispatch} from 'react-redux';
-import { listProducts } from './actions';
+import { listProducts } from './actions/index';
 
 
 function App() {
 
 
   const productList = useSelector(state=>state.productList);
+
   const {products, loading, error} = productList;
+  
   const dispatch = useDispatch();
   
   useEffect(() => {
@@ -23,20 +25,23 @@ function App() {
       // })
       dispatch(listProducts())
 
-  }, []);
+  }, [dispatch]);
 
-  console.log(productList);
 
+  // console.log(productList)
   return (
+
     <div className="App">
-    
-      {/* <BrowserRouter> */}
-       <SearchAppBar/>
-          {/* <Switch>
-              <Route exact path='/' component={Products}/>
-              <Route exact path='/details/:id' component={Details}/>
-          </Switch> */}
-      {/* </BrowserRouter> */}
+      <BrowserRouter>
+
+        <SearchAppBar products={products} />
+      
+        <Switch>
+            <Route exact path='/' component={()=><Products products={productList.products} loading={productList.loading} />}/>
+            <Route exact path='/details/:id' component={Details}/>
+        </Switch> 
+      
+      </BrowserRouter>
 
     </div>
   );

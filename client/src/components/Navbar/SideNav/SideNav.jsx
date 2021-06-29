@@ -13,40 +13,34 @@ import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {useStyles} from './MakeStyles';
-import {useSelector, useDispatch} from 'react-redux';
-import { listProducts } from '../../../actions';
+import { CircularProgress } from '@material-ui/core';
 
-function SideNav({open,setOpen}) {
+function SideNav({open,setOpen, products}) {
 
    
-    
-    const productList = useSelector(state=>state.productList);
-    const {products, loading, error} = productList;
-    const dispatch = useDispatch();
-
+   
     const classes = useStyles();
     const theme = useTheme();
     
     let category = [];
-    
-    useEffect(() => {
-        // data.products.map(data=>{
-        //     !category.includes(data.category) && 
-        //     category.push(data.category)
-        // })
-        dispatch(listProducts())
 
-    }, []);
- 
+    if(products){
+      products.map(data=>{
+        !category.includes(data.category) && 
+        category.push(data.category)
+    });
+    }
 
     const handleDrawerClose = () => {
         setOpen(false);
     };
 
     console.log(products);
+    console.log(category);
 
 
     return (
+
         <Drawer
         className={classes.drawer}
         variant="persistent"
@@ -73,12 +67,18 @@ function SideNav({open,setOpen}) {
         <Divider />
         <List>
             <Typography>Select Category</Typography>
-          {category.map((data, index) => (
-            <ListItem button key={data}>
-              <ListItemIcon> <InboxIcon /> </ListItemIcon>
-              <ListItemText primary={data} />
-            </ListItem>
-          ))}
+            {category.length < 1  ? <CircularProgress/>
+            :
+            <>
+              {category.map((data, index) => (
+                <ListItem button key={data}>
+                  <ListItemIcon> <InboxIcon /> </ListItemIcon>
+                  <ListItemText primary={data} />
+                </ListItem>
+              ))}
+            </>
+            }
+        
         </List>
       </Drawer>
     )

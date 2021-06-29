@@ -10,7 +10,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import SideNav from './SideNav/SideNav';
 
-export default function SearchAppBar() {
+export default function SearchAppBar({products}) {
   const classes = useStyles();
   const [open,setOpen] = React.useState(false);
 
@@ -48,7 +48,7 @@ export default function SearchAppBar() {
             />
           </div>
         </Toolbar>
-            {<SideNav open={open}  setOpen={setOpen} />}
+            {<SideNav open={open} products={products}  setOpen={setOpen} />}
        
       </AppBar>
     </div>
