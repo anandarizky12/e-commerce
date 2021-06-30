@@ -12,6 +12,7 @@ import {useSelector , useDispatch} from 'react-redux';
 import { getDetails } from '../../actions';
 import { CircularProgress } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
+import { addToCart } from '../../actions';
 
 export default function Details(props) {
   
@@ -30,15 +31,15 @@ export default function Details(props) {
   const classes = useStyles();
 
   const handleAddToCart=()=>{
+          dispatch(addToCart(id,qty))
           history.push(`/cart/${id}?qty=${qty}`)
+    
   }
  
   if(details.loading) return (<CircularProgress/>)
   return (
-   
-      <div>
         <Container className={classes.root} maxWidth="xl">
-        <img className={classes.img} src={details.product.image} alt={details.product.name} />
+            <img className={classes.img} src={details.product.image} alt={details.product.name} />
         <Grid className={classes.grid}>
             <Typography className={classes.name} >
                     {details.product.name}
@@ -80,7 +81,6 @@ export default function Details(props) {
           
         </Grid>
         </Container>
-      </div>
   
   );
 }

@@ -66,3 +66,13 @@ export const removeFromCart=(id)=>async(dispatch,getState)=>{
         console.log(error)
     }
   }
+  const GET_CART = "GET_CART"
+  export const getCart=()=>async(dispatch,getState)=>{
+    try {
+    const {cart:{cartItems}} = getState();
+      dispatch({type: GET_CART , payload : cartItems});
+    //   Cookie.set("cartItems",JSON.stringify(cartItems));
+    } catch (error) {
+        console.log(error)
+    }
+  }

@@ -8,6 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     container:{
       marginTop:2,
+      
 
     }
   }));
@@ -22,7 +23,7 @@ function Products({products , loading}) {
                direction="row"
                justify="center"
                alignItems="center"
-               spacing={2}
+               spacing={1}
                className={classes.container}
         >
             {products.map(product=>{

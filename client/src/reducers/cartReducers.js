@@ -1,8 +1,11 @@
 import { CART_ADD_ITEM ,REMOVE_CART } from "../constance/productConstance";
 
+const GET_CART = "GET_CART"
 
 export const cartReducers = (state = {cartItems:[]}, action)=>{
         switch(action.type){
+            case GET_CART :
+                return { cartItems:action.payload }
             case CART_ADD_ITEM:
                 const item = action.payload;
                 const product = state.cartItems.find(x => x.product === item.product);

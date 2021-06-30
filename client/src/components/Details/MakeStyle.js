@@ -5,11 +5,13 @@ import { red,blue ,grey} from '@material-ui/core/colors';
 const useStyles = makeStyles((theme) => ({
     root: {
       marginTop:80,
+      marginBottom:25,
       display:'flex',
      
     },
     img:{
-      width:500
+      width:500,
+   
     },
     name:{
       fontFamily:'roboto',

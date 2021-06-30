@@ -3,7 +3,7 @@ import { red,blue } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
     container:{
-      margin:15,
+      margin:35,
       marginTop:10,
       maxHeight:360,
       '&:hover': {
@@ -13,6 +13,9 @@ const useStyles = makeStyles((theme) => ({
     },
     root: {
       minWidth:260,
+      maxHeight:350,
+    
+  
     },
     media: {
       height: 0,

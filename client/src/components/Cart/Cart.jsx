@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react';
-import { addToCart } from '../../actions';
+import { getCart, addToCart } from '../../actions';
 import {useDispatch, useSelector} from 'react-redux';
 import Card from './Content/Card'
 import Typography from '@material-ui/core/Typography';
@@ -20,7 +20,7 @@ function Cart(props) {
     
     console.log(cartItems)
     useEffect(() => {
-        if(id) dispatch(addToCart(id,qty));
+        if(id) dispatch(getCart());
     }, [])
 
     if(cartItems && cartItems.length < 1) return <p>Cart Empty</p>
