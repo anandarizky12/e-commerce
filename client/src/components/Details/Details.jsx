@@ -20,9 +20,10 @@ export default function Details(props) {
   
   const dispatch = useDispatch();
   const id =  props.match.params.id;
+
   useEffect(() => {
       dispatch(getDetails(id));
-    }, []);
+  }, []);
     
   const details = useSelector(state=>state.productDetails);
 
@@ -31,12 +32,11 @@ export default function Details(props) {
   const handleAddToCart=()=>{
           history.push(`/cart/${id}?qty=${qty}`)
   }
-
+ 
+  if(details.loading) return (<CircularProgress/>)
   return (
    
       <div>
-        {details.loading ? <CircularProgress/>
-        :
         <Container className={classes.root} maxWidth="xl">
         <img className={classes.img} src={details.product.image} alt={details.product.name} />
         <Grid className={classes.grid}>
@@ -80,10 +80,6 @@ export default function Details(props) {
           
         </Grid>
         </Container>
-  
-
-      }
-       
       </div>
   
   );

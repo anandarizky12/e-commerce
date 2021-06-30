@@ -7,7 +7,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
     container:{
-      marginTop:15,
+      marginTop:2,
 
     }
   }));
@@ -15,12 +15,9 @@ const useStyles = makeStyles((theme) => ({
 function Products({products , loading}) {
 
     const classes = useStyles();
-    console.log(products ,"dsd")
+    if(loading) return (<CircularProgress/>)
     return (
     <div>
-
-      {loading ? <CircularProgress/>
-      : 
       <Grid    container
                direction="row"
                justify="center"
@@ -41,10 +38,7 @@ function Products({products , loading}) {
                           desc={product.description}                     
                         />
             })}
-    </Grid>
-      }
-      
-            
+    </Grid>         
     </div>
     )
 }
