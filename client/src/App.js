@@ -7,6 +7,9 @@ import Details from './components/Details/Details';
 import {useSelector, useDispatch} from 'react-redux';
 import { listProducts } from './actions/index';
 import Cart from './components/Cart/Cart';
+import SignInSide from './components/Login/SignIn/SignIn';
+import SignUp from './components/Login/SignUp/SignUp';
+import { useLocation } from 'react-router-dom';
 
 
 function App() {
@@ -15,31 +18,38 @@ function App() {
   const productList = useSelector(state=>state.productList);
 
   const {products, loading, error} = productList;
-  
+  const location = useLocation();
   const dispatch = useDispatch();
   
   useEffect(() => {
 
-      dispatch(listProducts())
+      dispatch(listProducts());
 
   }, [dispatch]);
 
+  console.log(location.pathname)
+ 
   return (
-
-    <div className="App">
-      <BrowserRouter>
-
-        <SearchAppBar products={products} />
+   
+      <div className="App">
       
-        <Switch>
-            <Route exact path='/' component={()=><Products products={productList.products} loading={productList.loading} />}/>
-            <Route exact path='/details/:id' component={Details}/>
-            <Route exact path='/cart/:id?' component={Cart}/>
-        </Switch> 
-      
-      </BrowserRouter>
+          {(location.pathname != '/signin' && location.pathname != '/register')  
+          && <SearchAppBar products={products}/> } 
+            
 
-    </div>
+            
+          <Switch>
+              <Route path='/signin' component={SignInSide}/>
+              <Route path='/register' component={SignUp}/>
+              <Route exact path='/' component={()=><Products products={productList.products} loading={productList.loading} />}/>
+              <Route exact path='/details/:id' component={Details}/>
+              <Route exact path='/cart/:id?' component={Cart}/>
+          </Switch> 
+        
+    
+
+      </div>
+   
   );
 }
 
