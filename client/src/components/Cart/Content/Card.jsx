@@ -14,12 +14,12 @@ export default function MediaControlCard({addToCart, cartItems,items,dispatch}) 
   const classes = useStyles();
 
   const handleMin=()=>{
-   
-      return dispatch(addToCart(items.product,items.qty-1));
+      if(items.qty == 1) return; 
+      dispatch(addToCart(items.product,items.qty-1));
  
   }
   const handlePlus=()=>{
-  
+     if(items.qty == items.stock) return alert("Maximum Stock.")
      return  dispatch(addToCart(items.product,items.qty+1))
   }
   const removeCart=(id)=>{

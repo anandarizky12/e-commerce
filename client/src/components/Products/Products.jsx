@@ -17,8 +17,10 @@ function Products({products , loading}) {
 
     const classes = useStyles();
     if(loading) return (<CircularProgress/>)
+    
+    if(products){
     return (
-    <div>
+
       <Grid    container
                direction="row"
                justify="center"
@@ -40,8 +42,8 @@ function Products({products , loading}) {
                         />
             })}
     </Grid>         
-    </div>
-    )
+
+    )}
 }
 
 export default Products

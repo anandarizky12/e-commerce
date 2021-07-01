@@ -26,7 +26,7 @@ function Cart(props) {
     if(cartItems && cartItems.length < 1) return <p>Cart Empty</p>
     return (
         <div style={{paddingLeft:30, paddingRight:30}}>
-            <div className="">
+            <div>
                     {cartItems.map(item=>(
                         <div className={classes.cardContainer}>
                             <Card addToCart={addToCart} dispatch={dispatch} cartItems={cartItems} items={item}/>
@@ -34,7 +34,7 @@ function Cart(props) {
                         </div>
                     ))}
             </div>
-            <div className="">
+            <div>
                 <Typography className={classes.sub}>
                     Subtotal ({cartItems.reduce((a, b) => a +  b.qty, 0)} items)
                     :
