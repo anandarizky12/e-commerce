@@ -13,19 +13,22 @@ import {CART_ADD_ITEM, PRODUCT_DETAILS_FAIL,
         USER_REGISTER_SUCCESS,
         USER_REGISTER_REQ,
         USER_REGISTER_FAIL,
+        USER_LOGOUT
         } from '../constance/productConstance.js';
 
-export const  listProducts =()=> async (dispatch)=>{
-    try {
-
-        dispatch({type: PRODUCT_LIST_REQUEST});
-        const {data} = await api.fetchProducts();
-        dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
-
-    } catch (error) {
-        dispatch({type:PRODUCT_LIST_FAIL, payload :error.message});
-    }
-}
+export const listProducts = (
+            category = '',
+            searchKeyword = '',
+            sortOrder = ''
+          ) => async (dispatch) => {
+            try {
+              dispatch({ type: PRODUCT_LIST_REQUEST });
+              const { data } = await api.fetchProducts(category, searchKeyword, sortOrder);
+              dispatch({ type: PRODUCT_LIST_SUCCESS, payload: data });
+            } catch (error) {
+              dispatch({ type: PRODUCT_LIST_FAIL, payload: error.message });
+            }
+};
 
 export const  getDetails =(id)=> async (dispatch)=>{
     try {
@@ -91,7 +94,7 @@ export const signIn=(email, password) => async(dispatch) =>{
         const {data} = await api.getUserSignIn(email ,password);
         dispatch({type : USER_SIGN_IN_SUCCESS, payload:data });
        
-        Cookie.set('userinfo',JSON.stringify(data));
+        Cookie.set('userInfo',JSON.stringify(data));
     } catch (error) {
         dispatch({type : USER_SIGN_IN_FAIL, payload:error.message }); 
     }
@@ -105,8 +108,14 @@ export const register=(username, email, password ) => async(dispatch) =>{
         const {data} = await api.getUserRegister(username, email ,password);
         dispatch({type : USER_REGISTER_SUCCESS, payload:data });
        
-        Cookie.set('userinfo',JSON.stringify(data));
+        Cookie.set('userInfo',JSON.stringify(data));
     } catch (error) {
         dispatch({type : USER_REGISTER_FAIL, payload:error.message }); 
     }
 }
+
+export const logout = () => (dispatch) => {
+    Cookie.remove("userInfo");
+    dispatch({ type: USER_LOGOUT })
+  }
+

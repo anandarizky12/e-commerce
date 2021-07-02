@@ -14,7 +14,8 @@ import {useStyles} from './MakeStyles';
 import {Link } from 'react-router-dom';
 import {useDispatch ,useSelector} from 'react-redux';
 import {signIn} from '../../../actions/index';
-
+import Alert from '@material-ui/lab/Alert';
+import  { Redirect } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -45,21 +46,18 @@ export default function SignInSide(props) {
     })}
   
   
-    useEffect(() => {
+    // useEffect(() => {
       if (userInfo) {
-        props.history.push(redirect);
+          return <Redirect to='/'  />
       }
-      return () => {
-        //
-      };
-    }, [userInfo]);
+    // }, [userInfo]);
 
     const submitHandler = (e) => {
       e.preventDefault();
       dispatch(signIn(payload.email, payload.password));
   
     }
-
+    console.log(userInfo, error , props.location.search )
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -97,10 +95,14 @@ export default function SignInSide(props) {
               onChange = {(e)=>handleChange(e)}
               autoComplete="current-password"
             />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            {error && 
+            <Grid item xs={12}>
+                 <Alert severity="error">
+                   {error}
+                  </Alert>
+            </Grid>
+            }
+          
             <Button
               type="submit"
               fullWidth
@@ -111,11 +113,6 @@ export default function SignInSide(props) {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
                 <Link to='/register' variant="body2">
                   {"Don't have an account? Sign Up"}

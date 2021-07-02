@@ -10,6 +10,7 @@ import Cart from './components/Cart/Cart';
 import SignInSide from './components/Login/SignIn/SignIn';
 import SignUp from './components/Login/SignUp/SignUp';
 import { useLocation } from 'react-router-dom';
+import StickyFooter from './components/Footer/Footer';
 
 
 function App() {
@@ -44,7 +45,12 @@ function App() {
               <Route exact path='/' component={()=><Products products={productList.products} loading={productList.loading} />}/>
               <Route exact path='/details/:id' component={Details}/>
               <Route exact path='/cart/:id?' component={Cart}/>
+              <Route >
+                    Not Found
+              </Route>
           </Switch> 
+
+          <StickyFooter/>
         
     
 

@@ -2,7 +2,20 @@
   text-align: center;
   margin-top: 80px;
 }
+*::-webkit-scrollbar {
+  width: 7px;               /* width of the entire scrollbar */
+  box-sizing: unset;
+}
 
+*::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0);        /* color of the tracking area */
+  
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.363);    /* color of the scroll thumb */
+  border: 10px solid rgba(8, 5, 0, 0);  /* creates padding around scroll thumb */
+}
 .App-logo {
   height: 40vmin;
   pointer-events: none;

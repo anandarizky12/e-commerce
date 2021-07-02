@@ -12,27 +12,30 @@ const getAllUsers = async (req , res)=>{
     }
 }
 
-const signIn = async (req,res)=>{
+const signIn = async (req,res,next)=>{
     const {email,password} = req.body;
     try {
-        const signInUser = await User.findOne({
-            email
-        }).select("+password");;
+        const signInUser = await User.findOne({email}).select("+password");;
+      
 
-        console.log(signInUser)
-        if(signInUser){
-            console.log('cek success')
+        const isMatch =  await signInUser.matchPasswords(password);
+        console.log(isMatch);
+        if(signInUser && isMatch){
+            console.log('success');
+            console.log(isMatch);
             res.send({
                 _id : signInUser.id,
                 username : signInUser.username,
                 email : signInUser.email,
                 isAdmin : signInUser.isAdmin,
-                token : getToken(user)
+                token : getToken(signInUser)
             })
-        }
-
+        }else {
+            res.status(401).send({msg : "Email or password Wrong"})
+          }
     } catch (error) {
-        res.send({msg:error.message})
+
+        next(error);
     }
 }
 const createAdmin = async (req,res)=>{

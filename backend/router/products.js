@@ -1,7 +1,25 @@
 const data = require('../Data')
+const  productModel = require('../models/productModel')
 
 const getProducts=(req,res)=>{
-    res.send(data.products)
+//     const category = req.query.category ? { category: req.query.category } : {};
+//     const searchKeyword = req.query.searchKeyword
+//     ? {
+//         name: {
+//           $regex: req.query.searchKeyword,
+//           $options: 'i',
+//         },
+//       }
+//     : {};
+//   const sortOrder = req.query.sortOrder
+//     ? req.query.sortOrder === 'lowest'
+//       ? { price: 1 }
+//       : { price: -1 }
+//     : { _id: -1 };
+//   const products = await Product.find({ ...category, ...searchKeyword }).sort(
+//     sortOrder
+//   );
+  res.send(data.products);
 }
 
 const getDetails = async (req, res) => { 

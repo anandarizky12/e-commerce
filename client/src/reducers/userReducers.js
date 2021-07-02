@@ -3,7 +3,8 @@ import {USER_SIGN_IN_FAIL,
         USER_SIGN_IN_SUCCESS,
         USER_REGISTER_SUCCESS,
         USER_REGISTER_REQ,
-        USER_REGISTER_FAIL, } from "../constance/productConstance";
+        USER_REGISTER_FAIL,
+        USER_LOGOUT, } from "../constance/productConstance";
 
 
 function userSignInReducers(state={},action){
@@ -14,6 +15,8 @@ function userSignInReducers(state={},action){
             return {loading : false ,userInfo:action.payload};
         case USER_SIGN_IN_FAIL:
             return {loading : false ,error : action.payload};
+        case USER_LOGOUT:
+                return {};
         default:
             return state;
     }

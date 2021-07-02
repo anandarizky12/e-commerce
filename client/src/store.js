@@ -3,12 +3,14 @@ import {productListReducers} from './reducers/productListReducers';
 import {productDetailsReducers} from './reducers/productListReducers';
 import thunk from 'redux-thunk';
 import { cartReducers } from './reducers/cartReducers';
-import Cookies from 'js-cookie';
+import Cookie from 'js-cookie';
 import {userSignInReducers, userRegisterReducers} from './reducers/userReducers';
 
-const cartItems = Cookies.getJSON("cartItems") || [];
+const cartItems = Cookie.getJSON("cartItems") || [];
+const userInfo = Cookie.getJSON('userInfo') || null;
 
-const initialState = {cart:{cartItems}};
+const initialState = {cart:{cartItems}, 
+                     userSignIn: { userInfo }};
 
 const reducers = combineReducers({
     productList : productListReducers, 
