@@ -6,9 +6,12 @@ const signIn = async (req,res)=>{
     const {email,password} = req.body;
     try {
         const signInUser = await User.findOne({
-            email,password
-        });
+            email
+        }).select("+password");;
+
+        console.log(signInUser)
         if(signInUser){
+            console.log('cek success')
             res.send({
                 _id : signInUser.id,
                 username : signInUser.username,

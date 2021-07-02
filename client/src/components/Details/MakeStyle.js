@@ -7,7 +7,7 @@ const useStyles = makeStyles((theme) => ({
       marginTop:80,
       marginBottom:25,
       display:'flex',
-     
+      justifyContent :'center',
     },
     img:{
       width:500,

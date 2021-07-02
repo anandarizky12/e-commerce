@@ -3,19 +3,18 @@ import { red,blue } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme) => ({
     container:{
-      margin:35,
+      margin:15,
       marginTop:10,
       maxHeight:360,
+   
       '&:hover': {
           cursor:'pointer',
           backgroundColor:red
       }
     },
     root: {
-      minWidth:260,
-      maxHeight:350,
-    
-  
+      minWidth:300,
+      maxHeight:370,  
     },
     media: {
       height: 0,

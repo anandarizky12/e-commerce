@@ -1,20 +1,25 @@
 import { fade, makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles((theme) => ({
     root: {
-      flexGrow: 1,
+      flexGrow: 3,
+      display : 'flex',
+      justifyContent:'space-between',
+      flexDirection:'row',
+      alignItems:'center'
     },
     menuButton: {
-      marginRight: theme.spacing(2),
+      marginLeft: theme.spacing(),
     },
     title: {
-      flexGrow: 1,
-      display: 'none',
+      display:'none',
+      color : 'white',
       [theme.breakpoints.up('sm')]: {
         display: 'block',
       },
     },
     search: {
       position: 'relative',
+      flexGrow: 1,
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
       '&:hover': {
@@ -52,6 +57,13 @@ const useStyles = makeStyles((theme) => ({
         },
       },
     },
+    containerIcons:{
+      display : 'flex',
+      marginLeft:8,
+      justifyContent :'space-between',
+      width : 315,
+      alignItems:'center'
+    }
   }));
 
   export {useStyles};

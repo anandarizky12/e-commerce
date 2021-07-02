@@ -14,6 +14,7 @@ import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
 import {useStyles} from './MakeStyles';
 import { CircularProgress } from '@material-ui/core';
+import SignInOut from '../../user/SignInOut';
 
 function SideNav({open,setOpen, products}) {
 
@@ -44,7 +45,7 @@ function SideNav({open,setOpen, products}) {
         <Drawer
         className={classes.drawer}
         variant="persistent"
-        anchor="left"
+        anchor="right"
         open={open}
         classes={{
           paper: classes.drawerPaper,
@@ -57,12 +58,7 @@ function SideNav({open,setOpen, products}) {
         </div>
         <Divider />
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'] .map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+              <SignInOut/>
         </List>
         <Divider />
         <List>

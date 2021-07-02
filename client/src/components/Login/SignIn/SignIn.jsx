@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState ,useEffect} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import {useStyles} from './MakeStyles';
 import {Link } from 'react-router-dom';
+import {useDispatch ,useSelector} from 'react-redux';
+import {signIn} from '../../../actions/index';
 
 
 function Copyright() {
@@ -25,18 +27,40 @@ function Copyright() {
   );
 }
 
-export default function SignInSide() {
+export default function SignInSide(props) {
   
-
+  const classes = useStyles();
   const [payload , setpayload] = useState({email : '' , password :''});
+  const dispatch = useDispatch();
+
+
+  const userSignIn = useSelector(state => state.userSignIn );
+  const {loading , userInfo ,error} =userSignIn;
+  const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
 
   const handleChange=(e)=>{
     const { value, name } = e.target
     setpayload({...payload,
         [name]:value
     })}
-  const classes = useStyles();
-    console.log(payload)
+  
+  
+    useEffect(() => {
+      if (userInfo) {
+        props.history.push(redirect);
+      }
+      return () => {
+        //
+      };
+    }, [userInfo]);
+
+    const submitHandler = (e) => {
+      e.preventDefault();
+      console.log(userSignIn)
+      dispatch(signIn(payload.email, payload.password));
+  
+    }
+
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
@@ -49,7 +73,7 @@ export default function SignInSide() {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <form className={classes.form} noValidate>
+          <form className={classes.form} onSubmit={submitHandler} noValidate>
             <TextField
               variant="outlined"
               margin="normal"

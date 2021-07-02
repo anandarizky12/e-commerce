@@ -6,7 +6,10 @@ import {CART_ADD_ITEM, PRODUCT_DETAILS_FAIL,
         PRODUCT_LIST_FAIL, 
         PRODUCT_LIST_REQUEST, 
         PRODUCT_LIST_SUCCESS,
-        REMOVE_CART 
+        REMOVE_CART ,
+        USER_SIGN_IN_SUCCESS,
+        USER_SIGN_IN_REQ,
+        USER_SIGN_IN_FAIL
         } from '../constance/productConstance.js';
 
 export const  listProducts =()=> async (dispatch)=>{
@@ -76,3 +79,17 @@ export const removeFromCart=(id)=>async(dispatch,getState)=>{
         console.log(error)
     }
   }
+
+export const signIn=(email, password) => async(dispatch) =>{
+        
+        dispatch({type : USER_SIGN_IN_REQ , payload:{email, password}});
+
+    try {
+        const {data} = await api.getUserSignIn(email ,password);
+        dispatch({type : USER_SIGN_IN_SUCCESS, payload:data });
+       
+        Cookie.set('userinfo',JSON.stringify(data));
+    } catch (error) {
+        dispatch({type : USER_SIGN_IN_FAIL, payload:error.message }); 
+    }
+}

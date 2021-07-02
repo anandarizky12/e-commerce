@@ -29,7 +29,7 @@ export default function Product({id, name, img, category, price, brand, rating, 
             </Avatar>
             }
             action={
-                <Typography className={classes.price} variant="body2" color="textSecondary" component="p">
+            <Typography className={classes.price} variant="body2" color="textSecondary" component="p">
                         {price + '$'}
             </Typography>
             }
