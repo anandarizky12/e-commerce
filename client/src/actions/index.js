@@ -9,7 +9,10 @@ import {CART_ADD_ITEM, PRODUCT_DETAILS_FAIL,
         REMOVE_CART ,
         USER_SIGN_IN_SUCCESS,
         USER_SIGN_IN_REQ,
-        USER_SIGN_IN_FAIL
+        USER_SIGN_IN_FAIL,
+        USER_REGISTER_SUCCESS,
+        USER_REGISTER_REQ,
+        USER_REGISTER_FAIL,
         } from '../constance/productConstance.js';
 
 export const  listProducts =()=> async (dispatch)=>{
@@ -91,5 +94,19 @@ export const signIn=(email, password) => async(dispatch) =>{
         Cookie.set('userinfo',JSON.stringify(data));
     } catch (error) {
         dispatch({type : USER_SIGN_IN_FAIL, payload:error.message }); 
+    }
+}
+
+export const register=(username, email, password ) => async(dispatch) =>{
+        
+        dispatch({type : USER_REGISTER_REQ , payload:{username, email, password}});
+
+    try {
+        const {data} = await api.getUserRegister(username, email ,password);
+        dispatch({type : USER_REGISTER_SUCCESS, payload:data });
+       
+        Cookie.set('userinfo',JSON.stringify(data));
+    } catch (error) {
+        dispatch({type : USER_REGISTER_FAIL, payload:error.message }); 
     }
 }

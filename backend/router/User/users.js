@@ -2,6 +2,16 @@ const User = require('../../models/User')
 const getToken = require('../../utils/utils');
 
 
+const getAllUsers = async (req , res)=>{
+    try {
+        const users = await User.find().sort({_id:-1});
+                
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(404).json({ message: error.message });
+    }
+}
+
 const signIn = async (req,res)=>{
     const {email,password} = req.body;
     try {
@@ -25,7 +35,7 @@ const signIn = async (req,res)=>{
         res.send({msg:error.message})
     }
 }
-const getUser= async (req,res)=>{
+const createAdmin = async (req,res)=>{
     try {
         const user = new User({
             username : "ilham",
@@ -40,5 +50,18 @@ const getUser= async (req,res)=>{
         res.send({msg:error.message})
     }
 }
+const registerUser = async (req,res)=>{
+    const {username, email,password} = req.body;
+    try {
+        const user = new User({
+            username, email, password
+        });
 
-module.exports = {getUser , signIn}
+        const newUser  = await user.save();
+        res.send({newUser,info:"User Successfully Create"})
+    } catch (error) {
+        res.send({msg:error.message})
+    }
+}
+
+module.exports = {signIn , createAdmin ,registerUser ,  getAllUsers }

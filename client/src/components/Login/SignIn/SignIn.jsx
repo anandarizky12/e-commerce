@@ -56,7 +56,6 @@ export default function SignInSide(props) {
 
     const submitHandler = (e) => {
       e.preventDefault();
-      console.log(userSignIn)
       dispatch(signIn(payload.email, payload.password));
   
     }
