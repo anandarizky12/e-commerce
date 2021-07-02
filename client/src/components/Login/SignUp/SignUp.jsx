@@ -71,10 +71,7 @@ export default function SignUp(props) {
    
     
     }, [userInfo]);
-    if(userInfo){
-      console.log(userInfo.msg)
 
-    }
   return (
     <Container component="main" maxWidth="xs">
     
