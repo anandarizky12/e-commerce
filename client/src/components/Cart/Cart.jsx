@@ -14,7 +14,7 @@ function Cart(props) {
     const dispatch = useDispatch();
     
     const id = props.match.params.id;
-    const qty = props.location.search && Number(props.location.search.split('=')[1])
+    const qty = props.location.search && Number(props.location.search.split('=')[1]);
     const cart = useSelector(state=>state.cart);
     const {cartItems} = cart;
     

@@ -23,16 +23,14 @@ const getProducts=async(req,res)=>{
 }
 
 const getDetails = async (req, res) => { 
-    const { id } = req.params;
-  
-    try {
-        const details = await data.products.find((data=>data._id == id))
-        
-        res.status(200).json(details);
-    } catch (error) {
-        res.status(404).json({ message: error.message });
-    }
+  const product = await  productModel.findOne({ _id: req.params.id });
+  if (product) {
+    res.send(product);
+  } else {
+    res.status(404).send({ message: 'Product Not Found.' });
   }
+  }
+  
 const createProduct = async (req, res)=>{
   const product = new productModel({
     name: req.body.name,

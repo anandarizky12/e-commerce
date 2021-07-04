@@ -35,7 +35,8 @@ export default function Details(props) {
           history.push(`/cart/${id}?qty=${qty}`)
     
   }
- 
+  
+  console.log(details)
   if(details.loading) return (<CircularProgress/>)
   return (
         <Container className={classes.root} maxWidth="xl">
