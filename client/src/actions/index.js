@@ -13,7 +13,10 @@ import {CART_ADD_ITEM, PRODUCT_DETAILS_FAIL,
         USER_REGISTER_SUCCESS,
         USER_REGISTER_REQ,
         USER_REGISTER_FAIL,
-        USER_LOGOUT
+        USER_LOGOUT,
+        PRODUCT_SAVE_REQUEST,
+        PRODUCT_SAVE_SUCCESS,
+        PRODUCT_SAVE_FAIL
         } from '../constance/productConstance.js';
 
 export const listProducts = (
@@ -119,3 +122,30 @@ export const logout = () => (dispatch) => {
     dispatch({ type: USER_LOGOUT })
   }
 
+export const saveProduct = (product) => async (dispatch, getState) => {
+    
+    try {
+      dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
+      console.log("called")
+      const {
+        userSignIn: { userInfo },
+      } = getState();
+
+      if (!product._id) {
+        const { data } = await api.createProduct(userInfo, product)
+        dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
+        console.log("exist")
+      } else {
+        const { data } = await api.updateProduct(userInfo, product)
+        dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
+        console.log("else")
+      }
+    } catch (error) {
+      const {
+        userSignIn: { userInfo },
+      } = getState();
+
+      dispatch({ type: PRODUCT_SAVE_FAIL, payload: error.message });
+      console.log("erros", error.message, userInfo)
+    }
+  };

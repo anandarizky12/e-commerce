@@ -29,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
     display : 'flex',
     justifyContent : 'flex-start',
     height : '100%',
+    flexWrap : "wrap",
 
  },
  icon:{
@@ -37,6 +38,7 @@ const useStyles = makeStyles((theme) => ({
  },
  grid : {
     display : 'flex',
+    
     flexDirection : 'column',
     justifyContent : 'space-between',
     height:'50%',
@@ -49,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
   footer: {
     padding: theme.spacing(3, 2),
-    height : 220,
+    height : '30%',
     marginTop: 20,
     backgroundColor:
       theme.palette.type === 'blue' ? theme.palette.grey[200] : theme.palette.grey[400],

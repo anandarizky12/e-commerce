@@ -33,4 +33,23 @@ const getDetails = async (req, res) => {
         res.status(404).json({ message: error.message });
     }
   }
-module.exports = {getProducts, getDetails}
+const createProduct = async (req, res)=>{
+  const product = new productModel({
+    name: req.body.name,
+    price: req.body.price,
+    image: req.body.image,
+    brand: req.body.brand,
+    category: req.body.category,
+    stock: req.body.stock,
+    description: req.body.description,
+    rating: req.body.rating,
+    numReviews: req.body.numReviews,
+  })
+  const newProduct = await product.save();
+  if(newProduct){
+    return res.status(201).send({message : "New Product Successfully Created", data : "newProduct"});
+  }
+  return res.status(500).send({message : "Product create failed"});
+}
+
+module.exports = {getProducts, getDetails, createProduct}

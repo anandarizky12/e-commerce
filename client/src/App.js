@@ -11,7 +11,7 @@ import SignInSide from './components/Login/SignIn/SignIn';
 import SignUp from './components/Login/SignUp/SignUp';
 import { useLocation } from 'react-router-dom';
 import StickyFooter from './components/Footer/Footer';
-
+import CreateProduct from './components/CreateProduct/CreateProduct';
 
 function App() {
 
@@ -37,14 +37,13 @@ function App() {
           {(location.pathname != '/signin' && location.pathname != '/register')  
           && <SearchAppBar products={products}/> } 
             
-
-            
           <Switch>
               <Route path='/signin' component={SignInSide}/>
               <Route path='/register' component={SignUp}/>
               <Route exact path='/' component={()=><Products products={productList.products} loading={productList.loading} />}/>
               <Route exact path='/details/:id' component={Details}/>
               <Route exact path='/cart/:id?' component={Cart}/>
+              <Route exact path='/admin/createproduct' component={CreateProduct}/>
               <Route >
                     Not Found
               </Route>

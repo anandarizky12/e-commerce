@@ -4,6 +4,9 @@ import {PRODUCT_LIST_FAIL,
         PRODUCT_DETAILS_SUCCESS,
         PRODUCT_DETAILS_REQ,
         PRODUCT_DETAILS_FAIL,
+        PRODUCT_SAVE_REQUEST,
+        PRODUCT_SAVE_SUCCESS,
+        PRODUCT_SAVE_FAIL,
 
 } from '../constance/productConstance';
 
@@ -33,5 +36,17 @@ function productDetailsReducers(state = {product : {} } , action){
             return state;
     }
 }
+function productSaveReducers(state = {product : {} } , action){
+    switch(action.type){
+        case PRODUCT_SAVE_REQUEST:
+            return {loading : true};
+        case PRODUCT_SAVE_SUCCESS:
+            return {loading:false , product : action.payload};
+        case  PRODUCT_SAVE_FAIL:
+            return {loading : false , error : action.payload};
+        default:
+            return state;
+    }
+}
 
-export  {productListReducers, productDetailsReducers}; 
+export  {productListReducers, productDetailsReducers, productSaveReducers}; 
