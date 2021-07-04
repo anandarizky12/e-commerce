@@ -8,7 +8,7 @@ export const getUserSignIn = (email, password) => axios.post(`http://localhost:5
 export const getUserRegister = (username, email, password) => axios.post(`http://localhost:5000/user/register`,{username, email, password});
 export const createProduct = (userInfo,  product) =>axios.post(`${url}/create`, product, {headers: {Authorization: 'Bearer ' +  userInfo.token}});
 export const updateProduct = (userInfo, product) =>axios.put(
-                                            `${url}/create` + product._id,
+                                            `${url}/${product.id}`,
                                             product,
                                             {
                                             headers: {

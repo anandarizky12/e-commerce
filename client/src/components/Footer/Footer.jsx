@@ -38,7 +38,6 @@ const useStyles = makeStyles((theme) => ({
  },
  grid : {
     display : 'flex',
-    
     flexDirection : 'column',
     justifyContent : 'space-between',
     height:'50%',
@@ -62,6 +61,7 @@ export default function StickyFooter() {
   const classes = useStyles();
 
   return (
+    <main className={classes.main}>
       <footer className={classes.footer}>
         <Container className={classes.container} maxWidth="xl">
             <Grid className={classes.grid}>
@@ -81,5 +81,6 @@ export default function StickyFooter() {
         </Container>
           <Copyright />
       </footer>
+      </main>
   );
 }

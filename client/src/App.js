@@ -43,7 +43,7 @@ function App() {
               <Route exact path='/' component={()=><Products products={productList.products} loading={productList.loading} />}/>
               <Route exact path='/details/:id' component={Details}/>
               <Route exact path='/cart/:id?' component={Cart}/>
-              <Route exact path='/admin/createproduct' component={CreateProduct}/>
+              <Route exact path='/admin/product' component={CreateProduct}/>
               <Route >
                     Not Found
               </Route>

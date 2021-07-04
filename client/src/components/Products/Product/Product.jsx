@@ -20,7 +20,7 @@ export default function Product({id, name, img, category, price, brand, rating, 
   };
 
   return (
-    <Grid className={classes.container} onClick={()=>console.log(id)}>
+    <Grid className={classes.container}>
         <Card className={classes.root}>
         <CardHeader
             avatar={
@@ -39,7 +39,8 @@ export default function Product({id, name, img, category, price, brand, rating, 
         <CardMedia
             className={classes.media}
             image={img}
-            title="Paella dish"
+            src="ds"
+            title={name}
         />
         <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">

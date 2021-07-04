@@ -24,12 +24,12 @@ function SignInOut(props) {
         history.push('/signin');
       }
     
-    
+    console.log(userInfo)
 
     return (
     <>
      
-        {userInfo ? (
+        {userInfo  ? (
         <>
               <Link to="/profile">
                     <ListItem button>
@@ -54,13 +54,18 @@ function SignInOut(props) {
              )}
             {userInfo && userInfo.isAdmin && (
               <div className="dropdown">
-                <a href="#">Admin</a>
-                <ul className="dropdown-content">
-                  <li>
-                    <Link to="/orders">Orders</Link>
-                    <Link to="/products">Products</Link>
-                  </li>
-                </ul>
+                    <Link to="/admin/product">
+                      <ListItem button>
+                            <ListItemIcon> < AccountCircleIcon /></ListItemIcon>
+                            <ListItemText primary={"Product"} />
+                        </ListItem>
+                    </Link>
+                    <Link to="admin/orders">
+                      <ListItem button>
+                            <ListItemIcon> < AccountCircleIcon /></ListItemIcon>
+                            <ListItemText primary={"Orders"} />
+                        </ListItem>
+                    </Link>
               </div>
             )}
     </>

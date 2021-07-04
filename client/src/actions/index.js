@@ -126,19 +126,19 @@ export const saveProduct = (product) => async (dispatch, getState) => {
     
     try {
       dispatch({ type: PRODUCT_SAVE_REQUEST, payload: product });
-      console.log("called")
+    
       const {
         userSignIn: { userInfo },
       } = getState();
 
-      if (!product._id) {
+      if (!product.id) {
         const { data } = await api.createProduct(userInfo, product)
         dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
-        console.log("exist")
+    
       } else {
         const { data } = await api.updateProduct(userInfo, product)
         dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
-        console.log("else")
+   
       }
     } catch (error) {
       const {
@@ -146,6 +146,6 @@ export const saveProduct = (product) => async (dispatch, getState) => {
       } = getState();
 
       dispatch({ type: PRODUCT_SAVE_FAIL, payload: error.message });
-      console.log("erros", error.message, userInfo)
+    
     }
   };
