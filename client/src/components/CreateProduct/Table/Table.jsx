@@ -53,7 +53,7 @@ const useStyles = makeStyles({
   }
 });
 
-export default function CustomizedTables({openModal,products}) {
+export default function CustomizedTables({openModal,products, deleteProduct}) {
   const classes = useStyles();
 
   return (
@@ -92,6 +92,7 @@ export default function CustomizedTables({openModal,products}) {
                 <Button
                             variant="contained"
                             color="secondary"
+                            onClick={()=>deleteProduct(product._id)}
                             className={classes.button}>
                             Delete
                 </Button>

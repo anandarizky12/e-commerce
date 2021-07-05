@@ -19,6 +19,7 @@ const DB_URL =  process.env.DB_URL;
 mongoose.connect(DB_URL, {
     useNewUrlParser :true ,
     useUnifiedTopology : true ,
-    useCreateIndex : true
+    useCreateIndex : true,
+    useFindAndModify: false
 }).then(() => app.listen(PORT, () => console.log(`Server Running on Port: http://localhost:${PORT}`)))
 .catch(error => console.log(error.message) )

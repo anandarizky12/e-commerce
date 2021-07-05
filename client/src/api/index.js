@@ -16,3 +16,10 @@ export const updateProduct = (userInfo, product) =>axios.put(
                                             },
                                             }
                                         );
+export const deleteProduct = (userInfo, productId) =>axios.delete(`${url}/delete/${productId}`,
+                                            {
+                                            headers: {
+                                                Authorization: 'Bearer ' + userInfo.token,
+                                            },
+                                            }
+                                        );

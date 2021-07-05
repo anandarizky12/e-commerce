@@ -1,6 +1,6 @@
 const data = require('../Data')
 const  productModel = require('../models/productModel')
-
+const mongoose  = require('mongoose')
 const getProducts=async(req,res)=>{
     const category = req.query.category ? { category: req.query.category } : {};
     const searchKeyword = req.query.searchKeyword
@@ -75,5 +75,14 @@ const updateProduct= async (req, res) => {
   return res.status(500).send({success : false, message: ' Error in Updating Product.' });
 };
 
+const deleteProduct= async (req, res) => {
+    const { id } = req.params;
+        await productModel.findByIdAndRemove(id);
 
-module.exports = {getProducts, getDetails, createProduct, updateProduct}
+        res.json({ message: "Post deleted successfully." });
+        if (!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send(`No post with id: ${id}`);
+
+};
+
+
+module.exports = {getProducts, getDetails, createProduct, updateProduct, deleteProduct}

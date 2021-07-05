@@ -16,7 +16,10 @@ import {CART_ADD_ITEM, PRODUCT_DETAILS_FAIL,
         USER_LOGOUT,
         PRODUCT_SAVE_REQUEST,
         PRODUCT_SAVE_SUCCESS,
-        PRODUCT_SAVE_FAIL
+        PRODUCT_SAVE_FAIL,
+        PRODUCT_DELETE_REQUEST,
+        PRODUCT_DELETE_SUCCESS,
+        PRODUCT_DELETE_FAIL
         } from '../constance/productConstance.js';
 
 export const listProducts = (
@@ -149,3 +152,25 @@ export const saveProduct = (product) => async (dispatch, getState) => {
     
     }
   };
+
+
+  export const deleteProduct = (productId) => async (dispatch, getState) => {
+    
+    try {
+      dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
+    
+      const {
+        userSignIn: { userInfo },
+      } = getState();
+
+  
+        const { data } = await api.deleteProduct(userInfo, productId);
+        dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data, success:true });
+ 
+    } catch (error) {
+  
+      dispatch({ type: PRODUCT_DELETE_FAIL, payload: error.message });
+  
+    }
+  };
+

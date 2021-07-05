@@ -5,7 +5,7 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Form from './Form';
 import {useDispatch, useSelector} from 'react-redux';
-import {saveProduct} from '../../actions/index';
+import {saveProduct, deleteProduct, listProducts} from '../../actions/index';
 import CustomizedTables from './Table/Table'
 import Button from '@material-ui/core/Button';
 import { Alert, AlertTitle } from '@material-ui/lab';
@@ -16,6 +16,7 @@ export default function CreateProduct() {
   const productList = useSelector(state=>state.productList);
   const {loading, products, error} = productList;
   const productSave = useSelector((state) => state.productSave);
+  const productDelete = useSelector((state) => state.productDelete);
   const [alert, setalert]  = useState(false);
 
   const {
@@ -23,6 +24,12 @@ export default function CreateProduct() {
     product: productmsg = false,
     error: errorSave,
   } = productSave;
+
+  const {
+    loading: loadingDelete,
+    success: successDelete,
+    error: errorDelete,
+  } = productDelete;
 
   const dispatch = useDispatch();
   const [openCreate, setOpenCreate] = useState(false);
@@ -59,6 +66,11 @@ export default function CreateProduct() {
     })
   };
 
+  const handlerDelete = (productId) =>{
+      setalert(true);
+      dispatch(deleteProduct(productId));
+  }
+
   const submitHandler = (e)=>{
     e.preventDefault();
     dispatch(saveProduct(payload));
@@ -68,9 +80,12 @@ export default function CreateProduct() {
   useEffect(() => {
     if(productmsg.success == true){
       setalert(true);
-      setOpenCreate(false)
+      setOpenCreate(false);
     }
-  }, [productmsg])
+    dispatch(listProducts());
+  }, [productmsg, successDelete]);
+
+
  
   if(alert){
     setTimeout(
@@ -79,8 +94,9 @@ export default function CreateProduct() {
     );
    
   }
-
+  console.log(payload)
   if(loading) return (<p>Loading. . . </p>);
+
   return (
     <React.Fragment>
         
@@ -97,13 +113,13 @@ export default function CreateProduct() {
            CreateProduct
          </Typography>
          <React.Fragment>
-           <Form setpayload={setpayload} payload={payload} close={setOpenCreate} handleInput={handleInput} submitHandler={submitHandler}/>
+           <Form  setpayload={setpayload} payload={payload} close={setOpenCreate} handleInput={handleInput} submitHandler={submitHandler}/>
          </React.Fragment>
        </Paper>   
      </main>}
      
    
-      <CustomizedTables openModal={openModal} products={products}/>
+      <CustomizedTables deleteProduct={handlerDelete} openModal={openModal} products={products}/>
       {!openCreate && <Button onClick={()=>setOpenCreate(true)} className={classes.button}>Create Product</Button>}
     </React.Fragment>
   );
