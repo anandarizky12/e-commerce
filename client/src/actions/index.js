@@ -17,9 +17,13 @@ import {CART_ADD_ITEM, PRODUCT_DETAILS_FAIL,
         PRODUCT_SAVE_REQUEST,
         PRODUCT_SAVE_SUCCESS,
         PRODUCT_SAVE_FAIL,
+        PRODUCT_SAVE_RESET,
         PRODUCT_DELETE_REQUEST,
         PRODUCT_DELETE_SUCCESS,
-        PRODUCT_DELETE_FAIL
+        PRODUCT_DELETE_FAIL,
+        PRODUCT_REVIEW_SAVE_REQUEST,
+        PRODUCT_REVIEW_SAVE_SUCCESS,
+        PRODUCT_REVIEW_SAVE_FAIL
         } from '../constance/productConstance.js';
 
 export const listProducts = (
@@ -137,10 +141,14 @@ export const saveProduct = (product) => async (dispatch, getState) => {
       if (!product.id) {
         const { data } = await api.createProduct(userInfo, product)
         dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
+        dispatch({ type: PRODUCT_SAVE_RESET, payload: data });
+     
     
       } else {
         const { data } = await api.updateProduct(userInfo, product)
         dispatch({ type: PRODUCT_SAVE_SUCCESS, payload: data });
+        dispatch({ type: PRODUCT_SAVE_RESET, payload: data });
+     
    
       }
     } catch (error) {
@@ -157,7 +165,7 @@ export const saveProduct = (product) => async (dispatch, getState) => {
   export const deleteProduct = (productId) => async (dispatch, getState) => {
     
     try {
-      dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId });
+      dispatch({ type: PRODUCT_DELETE_REQUEST, payload: productId  });
     
       const {
         userSignIn: { userInfo },
@@ -165,6 +173,7 @@ export const saveProduct = (product) => async (dispatch, getState) => {
 
   
         const { data } = await api.deleteProduct(userInfo, productId);
+        console.log("kepanggil")
         dispatch({ type: PRODUCT_DELETE_SUCCESS, payload: data, success:true });
  
     } catch (error) {
@@ -173,4 +182,23 @@ export const saveProduct = (product) => async (dispatch, getState) => {
   
     }
   };
+
+  
+export const saveProductReview = (productId, review) => async (dispatch, getState) => {
+  try {
+    const {
+      userSignIn: {
+        userInfo: { token },
+      },
+    } = getState();
+    console.log(review)
+    dispatch({ type: PRODUCT_REVIEW_SAVE_REQUEST, payload: review });
+    const { data } = await api.saveProduct(productId,review,token);
+    dispatch({ type: PRODUCT_REVIEW_SAVE_SUCCESS, payload: data });
+  } catch (error) {
+    // report error
+    dispatch({ type: PRODUCT_REVIEW_SAVE_FAIL, payload: error.message });
+    console.log(review,error)
+  }
+};
 

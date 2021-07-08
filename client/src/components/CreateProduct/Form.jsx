@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 export default function Form({setpayload, payload, handleInput ,submitHandler, close}) {
+  
   const handleClose=()=>{
     close(false)
     setpayload({id : null, 

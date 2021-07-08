@@ -22,36 +22,54 @@ class errorResponse extends Error{
 }
 
 
-const isAuth = async (req, res, next) =>{
+// const isAuth = async (req, res, next) =>{
 
-    if (
-        req.headers.authorization &&
-        req.headers.authorization.startsWith("Bearer")
-      ) {
-        token = req.headers.authorization.split(" ")[1];
+//     if (
+//         req.headers.authorization &&
+//         req.headers.authorization.startsWith("Bearer")
+//       ) {
+//         token = req.headers.authorization.split(" ")[1];
+//       }
+//     if (!token) {
+//         return next(new errorResponse("Not authorized to access this route", 401));
+//     }
+
+//     try {
+//         const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    
+//         const user = await User.findById(decoded.id);
+    
+//         if (!user) {
+//           return next(new errorResponse("No user found with this id", 404));
+//         }
+    
+//         req.user = user;
+    
+//         next();
+//       } catch (err) {
+//         return next(new errorResponse("Not authorized to access this router", 401));
+//       }
+
+    
+// }
+
+const isAuth = (req, res, next) => {
+  const token = req.headers.authorization;
+
+  if (token) {
+    const onlyToken = token.slice(7, token.length);
+    jwt.verify(onlyToken, process.env.JWT_SECRET, (err, decode) => {
+      if (err) {
+        return res.status(401).send({ message: 'Invalid Token' });
       }
-    if (!token) {
-        return next(new errorResponse("Not authorized to access this route", 401));
-    }
-
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    
-        const user = await User.findById(decoded.id);
-    
-        if (!user) {
-          return next(new errorResponse("No user found with this id", 404));
-        }
-    
-        req.user = user;
-    
-        next();
-      } catch (err) {
-        return next(new errorResponse("Not authorized to access this router", 401));
-      }
-
-    
-}
+      req.user = decode;
+      next();
+      return;
+    });
+  } else {
+    return res.status(401).send({ message: 'Token is not supplied.' });
+  }
+};
 
 
 const isAdmin = (req, res, next) => {

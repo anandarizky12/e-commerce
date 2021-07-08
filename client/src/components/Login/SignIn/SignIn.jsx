@@ -46,11 +46,11 @@ export default function SignInSide(props) {
     })}
   
   
-    // useEffect(() => {
+ 
       if (userInfo) {
-          return <Redirect to='/'  />
+          return <Redirect to={redirect}  />
       }
-    // }, [userInfo]);
+
 
     const submitHandler = (e) => {
       e.preventDefault();
@@ -114,7 +114,7 @@ export default function SignInSide(props) {
             </Button>
             <Grid container>
               <Grid item>
-                <Link to='/register' variant="body2">
+                <Link to={redirect === "/" ? "register" : `register?redirect=${redirect}`} variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

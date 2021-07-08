@@ -13,12 +13,16 @@ import { getDetails } from '../../actions';
 import { CircularProgress } from '@material-ui/core';
 import { useHistory } from "react-router-dom";
 import { addToCart } from '../../actions';
+import Review from './Review/Review';
+import Comments from './Review/Comments';
+import {Link} from 'react-router-dom';
 
 export default function Details(props) {
   
   const history = useHistory();
   const [qty ,setQty] = useState(1)
-  
+  const userSignin = useSelector((state) => state.userSignIn);
+  const { userInfo } = userSignin;
   const dispatch = useDispatch();
   const id =  props.match.params.id;
 
@@ -27,7 +31,7 @@ export default function Details(props) {
   }, []);
     
   const details = useSelector(state=>state.productDetails);
-
+  const { product, loading, error } = details;
   const classes = useStyles();
 
   const handleAddToCart=()=>{
@@ -36,9 +40,13 @@ export default function Details(props) {
     
   }
   
-  console.log(details)
-  if(details.loading) return (<CircularProgress/>)
+
+  if(details.loading) return (<CircularProgress/>);
+
   return (
+<>
+  {product && 
+        <Container className={classes.master}> 
         <Container className={classes.root} maxWidth="xl">
             <img className={classes.img} src={details.product.image} alt={details.product.name} />
         <Grid className={classes.grid}>
@@ -79,9 +87,19 @@ export default function Details(props) {
                     }
                    
             </Grid>
-          
+         
         </Grid>
+      
         </Container>
+        {userInfo ? <Review id={ id }  details={details} user={userInfo}/> : <p>Please <Link style={{color:'blue'}} to='/signin'>Sign In </Link>To write Review</p>}
+        {product.reviews && product.reviews.length >= 1 ? 
+        product.reviews.map(data=>(
+                <Comments name={data.name} comment={data.comment} rating={data.rating} /> 
+        ))          
+        : <p>no Comment yet</p>}
+  </Container>    
+   }
+ </>
   
   );
 }

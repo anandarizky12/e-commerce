@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const reviewSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
+    userId: { type: String },
     rating: { type: Number, default: 0 },
     comment: { type: String, required: true },
   },

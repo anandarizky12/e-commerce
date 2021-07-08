@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import { useStyles } from './MakeStyles';
 import Container from '@material-ui/core/Container';
 import { register } from '../../../actions';
-
+import  { Redirect } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -33,10 +33,13 @@ export default function SignUp(props) {
 
   const userRegister= useSelector(state => state.userRegister );
   const {loading , userInfo ,error} = userRegister;
+  
+  const userSignIn = useSelector(state => state.userSignIn );
+
 
   const [payload , setpayload] = useState({username : '', email : '' , password :'', repassword:''});
   const [erralert, setalert] = useState({show:false , email : false , password : false});
-
+  const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
 
   const handleChange=(e)=>{
     const { value, name } = e.target;
@@ -59,7 +62,10 @@ export default function SignUp(props) {
 
     useEffect(() => {
     if(userInfo){
-        if (userInfo && !userInfo.msg && userInfo.info) {
+      if(userInfo){
+        props.history.push(redirect);
+      }
+       else if (userInfo && !userInfo.msg && userInfo.info) {
           alert(userInfo.info);
           props.history.push('/signin');
        
@@ -70,6 +76,10 @@ export default function SignUp(props) {
    
     
     }, [userInfo]);
+
+    if (userSignIn.userInfo) {
+      return <Redirect to={redirect}  />
+  }
 
   return (
     <Container component="main" maxWidth="xs">

@@ -35,9 +35,6 @@ function SideNav({open,setOpen, products}) {
         setOpen(false);
     };
 
-    console.log(products);
-    console.log(category);
-
 
     return (
 

@@ -23,3 +23,14 @@ export const deleteProduct = (userInfo, productId) =>axios.delete(`${url}/delete
                                             },
                                             }
                                         );
+
+
+export const saveProduct = (productId,review,token)=> axios.post(
+                                                    `${url}/${productId}/reviews`,
+                                                    review,
+                                                    {
+                                                    headers: {
+                                                        Authorization: 'Bearer ' + token,
+                                                    },
+                                                    }
+                                                );

@@ -8,6 +8,7 @@ const useStyles = makeStyles((theme) => ({
       marginBottom:25,
       display:'flex',
       justifyContent :'center',
+      flexWrap : 'wrap'
     },
     img:{
       width:500,

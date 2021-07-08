@@ -9,25 +9,26 @@ import {saveProduct, deleteProduct, listProducts} from '../../actions/index';
 import CustomizedTables from './Table/Table'
 import Button from '@material-ui/core/Button';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import { withRouter } from 'react-router-dom';
 
-
-export default function CreateProduct() {
+function CreateProduct() {
   const classes = useStyles();
   const productList = useSelector(state=>state.productList);
   const {loading, products, error} = productList;
+
   const productSave = useSelector((state) => state.productSave);
   const productDelete = useSelector((state) => state.productDelete);
   const [alert, setalert]  = useState(false);
 
   const {
     loading: loadingSave,
-    product: productmsg = false,
+    success: productSuccess = false,
     error: errorSave,
   } = productSave;
 
   const {
     loading: loadingDelete,
-    success: successDelete,
+    success: successDelete = false,
     error: errorDelete,
   } = productDelete;
 
@@ -78,12 +79,13 @@ export default function CreateProduct() {
   }
 
   useEffect(() => {
-    if(productmsg.success == true){
+    if( productSuccess == true){
       setalert(true);
       setOpenCreate(false);
-    }
+      dispatch(listProducts());
+    };
     dispatch(listProducts());
-  }, [productmsg, successDelete]);
+  }, [ productSuccess , productDelete]);
 
 
  
@@ -94,7 +96,7 @@ export default function CreateProduct() {
     );
    
   }
-  console.log(payload)
+  console.log(productSave, "hahah")
   if(loading) return (<p>Loading. . . </p>);
 
   return (
@@ -124,3 +126,5 @@ export default function CreateProduct() {
     </React.Fragment>
   );
 }
+
+export default withRouter(CreateProduct);

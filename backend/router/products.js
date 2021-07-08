@@ -1,6 +1,10 @@
 const data = require('../Data')
 const  productModel = require('../models/productModel')
 const mongoose  = require('mongoose')
+
+
+
+
 const getProducts=async(req,res)=>{
     const category = req.query.category ? { category: req.query.category } : {};
     const searchKeyword = req.query.searchKeyword
@@ -84,5 +88,33 @@ const deleteProduct= async (req, res) => {
 
 };
 
+const reviewProduct = async (req, res) => {
+  const product = await productModel.findById(req.params.id);
+ 
+  if (product) {
 
-module.exports = {getProducts, getDetails, createProduct, updateProduct, deleteProduct}
+    const review = {
+      name: req.body.name,
+      userId : req.body.userId,
+      rating: Number(req.body.rating),
+      comment: req.body.comment,
+    };
+  
+    product.reviews.push(review);
+    product.numReviews = product.reviews.length;
+    product.rating =
+      product.reviews.reduce((a, c) => c.rating + a, 0) /
+      product.reviews.length;
+    const updatedProduct = await product.save();
+    res.status(201).send({
+      data: updatedProduct.reviews[updatedProduct.reviews.length - 1],
+      message: 'Review saved successfully.',
+    });
+  } else {
+  
+    res.status(404).send({ message: 'Product Not Found or Your Already comments' });
+  }
+};
+
+
+module.exports = {getProducts, getDetails, createProduct, updateProduct, deleteProduct, reviewProduct}

@@ -21,7 +21,10 @@ function Cart(props) {
     console.log(cartItems)
     useEffect(() => {
         if(id) dispatch(getCart());
-    }, [])
+    }, []);
+    const checkoutHandler = () => {
+        props.history.push("/signin?redirect=shipping");
+      }
 
     if(cartItems && cartItems.length < 1) return <p>Cart Empty</p>
     return (
@@ -40,7 +43,7 @@ function Cart(props) {
                     :
                     ${cartItems.reduce((a, b) => a + b.price * b.qty, 0)}
                 </Typography>
-                <Button className={classes.button}  variant="contained" color="primary">CheckOut</Button>
+                <Button className={classes.button} onClick={checkoutHandler} variant="contained" color="primary">CheckOut</Button>
             </div>
             
         </div>
