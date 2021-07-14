@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,41 +7,64 @@ import InputBase from '@material-ui/core/InputBase';
 import {useStyles} from './MakeStyle'
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import {Link} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import SideNav from './SideNav/SideNav';
+import { useDispatch } from 'react-redux';
+import { listProducts } from '../../actions';
 
 export default function SearchAppBar({products}) {
   const classes = useStyles();
   const [open,setOpen] = React.useState(false);
+  const [payload,setpayload]= useState({search : "" , sortOrder:""})
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const submitHandler = (e) => {
+    e.preventDefault();
+    // dispatch(listProducts('' ,payload.search, payload.sortOrder));
+    history.push(`/results?search=${payload.search}`);
+    setpayload({...payload,search:''});
 
+  };
+ 
 
-  
-  console.log(open)
+  const handleInput =(e)=>{
+    const { value, name } = e.target
+    setpayload({...payload,
+        [name]:value
+    })
+  };
 
+  const backHome=()=>{
+    dispatch(listProducts());
+    history.push('/');
+  }
+
+  console.log(payload.search)
   return (
     <div>
       <AppBar  position="fixed">
         <Toolbar className={classes.root}>
-          <Link to='/'>
-              <Typography  className={classes.title} variant="h6" noWrap>
+            <Typography onClick={()=>backHome()} className={classes.title} variant="h6" noWrap>
                 We-Commerce
-              </Typography>     
-          </Link> 
+            </Typography>     
        
           <div className={classes.containerIcons}>
-              <div className={classes.search}>
+              <form onSubmit={submitHandler} className={classes.search}>
                   <div className={classes.searchIcon}>
                     <SearchIcon />
                   </div>
                   <InputBase
                     placeholder="Search…"
+                    name = "search"
+                    value={payload.search}
+                    onChange={(e=>handleInput(e))}
                     classes={{
                       root: classes.inputRoot,
                       input: classes.inputInput,
                     }}
                     inputProps={{ 'aria-label': 'search' }}
                   />
-              </div>
+              </form>
           
               <IconButton
                 edge="start"

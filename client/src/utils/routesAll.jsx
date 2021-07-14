@@ -4,14 +4,15 @@ import Cart from '../components/Cart/Cart';
 import SignInSide from '../components/Login/SignIn/SignIn';
 import SignUp from '../components/Login/SignUp/SignUp';
 import Details from '../components/Details/Details';
-import Products from '../components/Products/Products';
+import Home from '../components/Home/Home';
 import {BrowserRouter , Switch, Route} from 'react-router-dom';
 import {useSelector, useDispatch} from 'react-redux';
 import { listProducts } from '../actions/index';
 import { useLocation } from 'react-router-dom';
 import  SearchAppBar from '../components/Navbar/Navbar';
 import StickyFooter from '../components/Footer/Footer';
-import ProtectedRoute from './protectedRoutes'
+import ProtectedRoute from './protectedRoutes';
+import Search from '../components/Search/Search';
 
 function RoutesAll() {
     
@@ -22,10 +23,10 @@ function RoutesAll() {
 
   const dispatch = useDispatch();
     useEffect(() => {
-
+        
         dispatch(listProducts());
-  
-    }, [dispatch]);
+        
+    },[dispatch]);
   
     return (
     <>
@@ -35,7 +36,8 @@ function RoutesAll() {
     <Switch>
         <Route path='/signin' component={SignInSide}/>
         <Route path='/register' component={SignUp}/>
-        <Route exact path='/' component={()=><Products products={productList.products} loading={productList.loading} />}/>
+        <Route path='/results' component={Search}/>
+        <Route exact path='/' component={()=><Home products={productList.products} loading={productList.loading} />}/>
         <Route exact path='/details/:id' component={Details}/>
         <Route exact path='/cart/:id?' component={Cart}/>
 

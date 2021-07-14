@@ -23,6 +23,7 @@ const getProducts=async(req,res)=>{
   const products = await  productModel.find({ ...category, ...searchKeyword }).sort(
     sortOrder
   );
+ 
   res.send(products);
 }
 
